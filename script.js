@@ -47,14 +47,14 @@ class ClinicApp {
 
     getPageTitle(page) {
         const titles = {
-            'dashboard': 'Dashboard',
-            'patients': 'Patients',
-            'appointments': 'Appointments',
-            'doctors': 'Doctors',
-            'specialties': 'Specialties',
-            'reports': 'Reports'
+            'dashboard': 'Painel de Controlo',
+            'patients': 'Doentes',
+            'appointments': 'Consultas',
+            'doctors': 'Médicos',
+            'specialties': 'Especialidades',
+            'reports': 'Relatórios'
         };
-        return titles[page] || 'Dashboard';
+        return titles[page] || 'Painel de Controlo';
     }
 
     loadPageContent(page) {
@@ -84,27 +84,27 @@ class ClinicApp {
     getDashboardContent() {
         return `
             <div class="welcome-message">
-                <h2>Welcome to Clinic Management System</h2>
-                <p>Your clinic management dashboard</p>
+                <h2>Bem-vindo ao Sistema de Gestão de Clínica</h2>
+                <p>O seu painel de gestão de clínica</p>
             </div>
             <div class="card-grid">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Today's Appointments</h3>
+                        <h3 class="card-title">Consultas de Hoje</h3>
                     </div>
-                    <p>View and manage today's appointments</p>
+                    <p>Ver e gerir as consultas de hoje</p>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Patient Records</h3>
+                        <h3 class="card-title">Registos de Doentes</h3>
                     </div>
-                    <p>Access patient information and history</p>
+                    <p>Aceder a informações e histórico de doentes</p>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Quick Actions</h3>
+                        <h3 class="card-title">Ações Rápidas</h3>
                     </div>
-                    <p>Perform common clinic tasks</p>
+                    <p>Executar tarefas comuns da clínica</p>
                 </div>
             </div>
         `;
@@ -113,15 +113,15 @@ class ClinicApp {
     getPatientsContent() {
         return `
             <div class="list-header">
-                <h2>Patient Management</h2>
-                <button onclick="app.showAddPatientForm()">Add New Patient</button>
+                <h2>Gestão de Doentes</h2>
+                <button onclick="app.showAddPatientForm()">Adicionar Novo Doente</button>
             </div>
             <div class="search-container">
-                <input type="text" placeholder="Search patients..." id="patient-search">
-                <button onclick="app.searchPatients()">Search</button>
+                <input type="text" placeholder="Pesquisar doentes..." id="patient-search">
+                <button onclick="app.searchPatients()">Pesquisar</button>
             </div>
             <div id="patients-list">
-                <p>Patient list will be displayed here...</p>
+                <p>A lista de doentes será exibida aqui...</p>
             </div>
         `;
     }
@@ -129,15 +129,15 @@ class ClinicApp {
     getAppointmentsContent() {
         return `
             <div class="list-header">
-                <h2>Appointment Management</h2>
-                <button onclick="app.showAddAppointmentForm()">Schedule Appointment</button>
+                <h2>Gestão de Consultas</h2>
+                <button onclick="app.showAddAppointmentForm()">Agendar Consulta</button>
             </div>
             <div class="search-container">
-                <input type="text" placeholder="Search appointments..." id="appointment-search">
-                <button onclick="app.searchAppointments()">Search</button>
+                <input type="text" placeholder="Pesquisar consultas..." id="appointment-search">
+                <button onclick="app.searchAppointments()">Pesquisar</button>
             </div>
             <div id="appointments-list">
-                <p>Appointment list will be displayed here...</p>
+                <p>A lista de consultas será exibida aqui...</p>
             </div>
         `;
     }
@@ -145,15 +145,15 @@ class ClinicApp {
     getDoctorsContent() {
         return `
             <div class="list-header">
-                <h2>Doctor Management</h2>
-                <button onclick="app.showAddDoctorForm()">Add New Doctor</button>
+                <h2>Gestão de Médicos</h2>
+                <button onclick="app.showAddDoctorForm()">Adicionar Novo Médico</button>
             </div>
             <div class="search-container">
-                <input type="text" placeholder="Search doctors..." id="doctor-search">
-                <button onclick="app.searchDoctors()">Search</button>
+                <input type="text" placeholder="Pesquisar médicos..." id="doctor-search">
+                <button onclick="app.searchDoctors()">Pesquisar</button>
             </div>
             <div id="doctors-list">
-                <p>Doctor list will be displayed here...</p>
+                <p>A lista de médicos será exibida aqui...</p>
             </div>
         `;
     }
@@ -161,15 +161,15 @@ class ClinicApp {
     getSpecialtiesContent() {
         return `
             <div class="list-header">
-                <h2>Specialty Management</h2>
-                <button onclick="app.showAddSpecialtyForm()">Add New Specialty</button>
+                <h2>Gestão de Especialidades</h2>
+                <button onclick="app.showAddSpecialtyForm()">Adicionar Nova Especialidade</button>
             </div>
             <div class="search-container">
-                <input type="text" placeholder="Search specialties..." id="specialty-search">
-                <button onclick="app.searchSpecialties()">Search</button>
+                <input type="text" placeholder="Pesquisar especialidades..." id="specialty-search">
+                <button onclick="app.searchSpecialties()">Pesquisar</button>
             </div>
             <div id="specialties-list">
-                <p>Specialty list will be displayed here...</p>
+                <p>A lista de especialidades será exibida aqui...</p>
             </div>
         `;
     }
@@ -177,27 +177,27 @@ class ClinicApp {
     getReportsContent() {
         return `
             <div class="list-header">
-                <h2>Reports & Analytics</h2>
-                <button onclick="app.generateReport()">Generate Report</button>
+                <h2>Relatórios e Análises</h2>
+                <button onclick="app.generateReport()">Gerar Relatório</button>
             </div>
             <div class="card-grid">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Monthly Statistics</h3>
+                        <h3 class="card-title">Estatísticas Mensais</h3>
                     </div>
-                    <p>View monthly clinic statistics</p>
+                    <p>Ver estatísticas mensais da clínica</p>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Patient Reports</h3>
+                        <h3 class="card-title">Relatórios de Doentes</h3>
                     </div>
-                    <p>Generate patient-related reports</p>
+                    <p>Gerar relatórios relacionados com doentes</p>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Financial Reports</h3>
+                        <h3 class="card-title">Relatórios Financeiros</h3>
                     </div>
-                    <p>View financial summaries</p>
+                    <p>Ver resumos financeiros</p>
                 </div>
             </div>
         `;
@@ -219,39 +219,39 @@ class ClinicApp {
 
     // Placeholder methods for future implementation
     showAddPatientForm() {
-        alert('Add Patient form will be implemented in future tasks');
+        alert('O formulário Adicionar Doente será implementado em tarefas futuras');
     }
 
     showAddAppointmentForm() {
-        alert('Add Appointment form will be implemented in future tasks');
+        alert('O formulário Adicionar Consulta será implementado em tarefas futuras');
     }
 
     showAddDoctorForm() {
-        alert('Add Doctor form will be implemented in future tasks');
+        alert('O formulário Adicionar Médico será implementado em tarefas futuras');
     }
 
     showAddSpecialtyForm() {
-        alert('Add Specialty form will be implemented in future tasks');
+        alert('O formulário Adicionar Especialidade será implementado em tarefas futuras');
     }
 
     generateReport() {
-        alert('Report generation will be implemented in future tasks');
+        alert('A geração de relatórios será implementada em tarefas futuras');
     }
 
     searchPatients() {
-        alert('Patient search will be implemented in future tasks');
+        alert('A pesquisa de doentes será implementada em tarefas futuras');
     }
 
     searchAppointments() {
-        alert('Appointment search will be implemented in future tasks');
+        alert('A pesquisa de consultas será implementada em tarefas futuras');
     }
 
     searchDoctors() {
-        alert('Doctor search will be implemented in future tasks');
+        alert('A pesquisa de médicos será implementada em tarefas futuras');
     }
 
     searchSpecialties() {
-        alert('Specialty search will be implemented in future tasks');
+        alert('A pesquisa de especialidades será implementada em tarefas futuras');
     }
 }
 
