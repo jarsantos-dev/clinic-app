@@ -47,3 +47,13 @@ The project will include **multiple HTML pages/views**, and the data structure w
 * This is a single-user app; no authentication is needed
 * All code must work offline
 * No automated tests required for now
+
+# Language Guidelines
+
+* **All user-visible text must be in Portuguese (Portugal)**
+  * Navigation labels, headings, buttons, placeholders, messages, etc.
+  * Use Portuguese (Portugal) spelling and terminology
+* **Code and markup must remain in English**
+  * Variable names, function names, class names, IDs, CSS classes
+  * HTML attributes, JavaScript keywords, comments
+  * File names and folder structures
