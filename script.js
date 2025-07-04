@@ -2,6 +2,7 @@
 class ClinicApp {
     constructor() {
         this.currentPage = 'dashboard';
+        this.specialties = this.loadSpecialties();
         this.init();
     }
 
@@ -159,17 +160,38 @@ class ClinicApp {
     }
 
     getSpecialtiesContent() {
+        // Trigger display of specialties after content is loaded
+        setTimeout(() => this.displaySpecialties(), 0);
+        
         return `
             <div class="list-header">
                 <h2>Gestão de Especialidades</h2>
                 <button onclick="app.showAddSpecialtyForm()">Adicionar Nova Especialidade</button>
             </div>
             <div class="search-container">
-                <input type="text" placeholder="Pesquisar especialidades..." id="specialty-search">
+                <input type="text" placeholder="Pesquisar especialidades..." id="specialty-search" oninput="app.searchSpecialties()">
                 <button onclick="app.searchSpecialties()">Pesquisar</button>
             </div>
+            <div id="add-specialty-form" class="hidden form-container">
+                <h3>Adicionar Nova Especialidade</h3>
+                <form id="specialty-form">
+                    <div>
+                        <label for="specialty-name">Nome da Especialidade *</label>
+                        <input type="text" id="specialty-name" name="name" required>
+                    </div>
+                    <div>
+                        <label for="specialty-description">Descrição</label>
+                        <textarea id="specialty-description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="app.cancelAddSpecialty()" class="secondary">Cancelar</button>
+                        <button type="submit">Adicionar Especialidade</button>
+                    </div>
+                </form>
+                <div id="form-message" class="hidden"></div>
+            </div>
             <div id="specialties-list">
-                <p>A lista de especialidades será exibida aqui...</p>
+                <p>A carregar especialidades...</p>
             </div>
         `;
     }
@@ -231,7 +253,73 @@ class ClinicApp {
     }
 
     showAddSpecialtyForm() {
-        alert('O formulário Adicionar Especialidade será implementado em tarefas futuras');
+        const formContainer = document.getElementById('add-specialty-form');
+        const form = document.getElementById('specialty-form');
+        const messageDiv = document.getElementById('form-message');
+        
+        if (formContainer && form) {
+            // Clear previous form data and messages
+            form.reset();
+            messageDiv.className = 'hidden';
+            messageDiv.textContent = '';
+            
+            // Show the form
+            formContainer.classList.remove('hidden');
+            
+            // Focus on the name input
+            document.getElementById('specialty-name').focus();
+            
+            // Add form submit handler if not already added
+            if (!form.hasAttribute('data-handler-added')) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleAddSpecialtySubmit();
+                });
+                form.setAttribute('data-handler-added', 'true');
+            }
+        }
+    }
+
+    cancelAddSpecialty() {
+        const formContainer = document.getElementById('add-specialty-form');
+        const form = document.getElementById('specialty-form');
+        const messageDiv = document.getElementById('form-message');
+        
+        if (formContainer) {
+            formContainer.classList.add('hidden');
+            if (form) form.reset();
+            if (messageDiv) {
+                messageDiv.className = 'hidden';
+                messageDiv.textContent = '';
+            }
+        }
+    }
+
+    handleAddSpecialtySubmit() {
+        const nameInput = document.getElementById('specialty-name');
+        const descriptionInput = document.getElementById('specialty-description');
+        const messageDiv = document.getElementById('form-message');
+        
+        const name = nameInput.value;
+        const description = descriptionInput.value;
+        
+        const result = this.addSpecialty(name, description);
+        
+        if (result.success) {
+            // Show success message
+            messageDiv.textContent = 'Especialidade adicionada com sucesso!';
+            messageDiv.className = 'success-message';
+            
+            // Clear form and hide it after a short delay
+            setTimeout(() => {
+                this.cancelAddSpecialty();
+                this.displaySpecialties();
+            }, 1500);
+        } else {
+            // Show error message
+            messageDiv.textContent = result.message;
+            messageDiv.className = 'error-message';
+        }
     }
 
     generateReport() {
@@ -251,7 +339,102 @@ class ClinicApp {
     }
 
     searchSpecialties() {
-        alert('A pesquisa de especialidades será implementada em tarefas futuras');
+        const searchTerm = document.getElementById('specialty-search').value.toLowerCase();
+        this.displaySpecialties(searchTerm);
+    }
+
+    // Specialty Data Management Methods
+    loadSpecialties() {
+        const stored = localStorage.getItem('specialties');
+        if (stored) {
+            return JSON.parse(stored);
+        }
+        // Return some default specialties if none exist
+        return [
+            { id: 1, name: 'Cardiologia', description: 'Coração e sistema cardiovascular', createdAt: new Date().toISOString() },
+            { id: 2, name: 'Dermatologia', description: 'Pele, cabelo e unhas', createdAt: new Date().toISOString() },
+            { id: 3, name: 'Pediatria', description: 'Cuidados médicos para crianças', createdAt: new Date().toISOString() }
+        ];
+    }
+
+    saveSpecialties() {
+        localStorage.setItem('specialties', JSON.stringify(this.specialties));
+    }
+
+    addSpecialty(name, description = '') {
+        if (!name || name.trim() === '') {
+            return { success: false, message: 'Nome da especialidade é obrigatório' };
+        }
+
+        // Check for duplicate names
+        const existingSpecialty = this.specialties.find(s => s.name.toLowerCase() === name.toLowerCase());
+        if (existingSpecialty) {
+            return { success: false, message: 'Já existe uma especialidade com este nome' };
+        }
+
+        const newSpecialty = {
+            id: this.getNextSpecialtyId(),
+            name: name.trim(),
+            description: description.trim(),
+            createdAt: new Date().toISOString()
+        };
+
+        this.specialties.push(newSpecialty);
+        this.saveSpecialties();
+        return { success: true, specialty: newSpecialty };
+    }
+
+    getNextSpecialtyId() {
+        return this.specialties.length > 0 ? Math.max(...this.specialties.map(s => s.id)) + 1 : 1;
+    }
+
+    displaySpecialties(searchTerm = '') {
+        const filteredSpecialties = searchTerm 
+            ? this.specialties.filter(specialty => 
+                specialty.name.toLowerCase().includes(searchTerm) ||
+                specialty.description.toLowerCase().includes(searchTerm)
+              )
+            : this.specialties;
+
+        const listContainer = document.getElementById('specialties-list');
+        if (!listContainer) return;
+
+        if (filteredSpecialties.length === 0) {
+            listContainer.innerHTML = searchTerm 
+                ? `<p>Nenhuma especialidade encontrada para "${searchTerm}"</p>`
+                : '<p>Nenhuma especialidade disponível. Adicione uma para começar!</p>';
+            return;
+        }
+
+        const specialtyCards = filteredSpecialties.map(specialty => `
+            <div class="card specialty-card" data-specialty-id="${specialty.id}">
+                <div class="card-header">
+                    <h3 class="card-title">${specialty.name}</h3>
+                    <div class="card-actions">
+                        <button onclick="app.editSpecialty(${specialty.id})" class="secondary">Editar</button>
+                        <button onclick="app.deleteSpecialty(${specialty.id})" class="secondary">Eliminar</button>
+                    </div>
+                </div>
+                <p><strong>ID:</strong> ${specialty.id}</p>
+                ${specialty.description ? `<p><strong>Descrição:</strong> ${specialty.description}</p>` : ''}
+                <p><small>Criado: ${new Date(specialty.createdAt).toLocaleDateString()}</small></p>
+            </div>
+        `).join('');
+
+        listContainer.innerHTML = `<div class="card-grid">${specialtyCards}</div>`;
+    }
+
+    editSpecialty(id) {
+        // For now, just alert - this could be implemented later
+        alert(`A funcionalidade de editar especialidade será implementada em tarefas futuras`);
+    }
+
+    deleteSpecialty(id) {
+        if (confirm('Tem a certeza de que pretende eliminar esta especialidade?')) {
+            this.specialties = this.specialties.filter(s => s.id !== id);
+            this.saveSpecialties();
+            this.displaySpecialties();
+        }
     }
 }
 
