@@ -15,15 +15,18 @@ class PatientDetailView {
     }
 
     static init() {
-        window['patient-detailView'] = new PatientDetailView();
+        const view = new PatientDetailView();
+        window['patient-detailView'] = view;
         // Also register with an alternative name to debug
-        window.patientDetailView = window['patient-detailView'];
+        window.patientDetailView = view;
         console.log('Vista de detalhe do paciente inicializada');
         
         // Call refresh immediately to test
         setTimeout(() => {
-            window['patient-detailView'].refresh();
+            view.refresh();
         }, 100);
+        
+        return view;
     }
 
     // Standard interface method for view refresh
@@ -85,10 +88,15 @@ class PatientDetailView {
 
     displayPatientInfo() {
         const nameElement = document.getElementById('patient-name');
-        if (nameElement && this.patient) {
-            nameElement.textContent = this.patient.name;
-        } else if (nameElement) {
-            nameElement.textContent = 'Paciente não encontrado';
+        console.log('displayPatientInfo called, nameElement:', nameElement, 'patient:', this.patient);
+        if (nameElement) {
+            if (this.patient) {
+                nameElement.textContent = this.patient.name;
+                console.log('Updated patient name to:', this.patient.name);
+            } else {
+                nameElement.textContent = 'Paciente não encontrado';
+                console.log('Patient not found, patientId:', this.patientId);
+            }
         }
     }
 
