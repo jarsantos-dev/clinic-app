@@ -8,8 +8,7 @@ class SpecialtiesView {
         window.specialtiesView = new SpecialtiesView();
         console.log('Specialties view initialized');
         
-        // Trigger display of specialties after content is loaded
-        setTimeout(() => window.specialtiesView.displaySpecialties(), 0);
+        // Don't trigger display here - let app.js handle the timing
     }
 
     showAddSpecialtyForm() {

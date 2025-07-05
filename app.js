@@ -32,7 +32,7 @@ class ClinicApp {
             // Add active class to clicked link
             document.querySelector(`[data-page="${page}"]`).classList.add('active');
 
-            // Load content (the page will set its own title)
+            // Load content (the page will set its own title and load its own scripts)
             await this.loadPageContent(page);
             
             // Update current page
@@ -58,8 +58,11 @@ class ClinicApp {
             const html = await response.text();
             contentArea.innerHTML = html;
 
-            // Load page-specific JavaScript
-            await this.loadPageScript(page);
+            // Execute inline scripts manually since innerHTML doesn't execute them
+            this.executeInlineScripts(contentArea);
+
+            // Look for data-view-script attribute to load external scripts
+            this.loadViewScripts(contentArea);
             
         } catch (error) {
             console.error('Error loading page content:', error);
@@ -67,35 +70,64 @@ class ClinicApp {
         }
     }
 
-    async loadPageScript(page) {
-        const scriptId = `script-${page}`;
-        
-        try {
-            // Remove existing script if present
-            const existingScript = document.getElementById(scriptId);
+    executeInlineScripts(container) {
+        const scripts = container.querySelectorAll('script:not([src])');
+        scripts.forEach(script => {
+            try {
+                eval(script.textContent);
+            } catch (error) {
+                console.error('Error executing inline script:', error);
+            }
+        });
+    }
+
+    loadViewScripts(container) {
+        const scriptElements = container.querySelectorAll('[data-view-script]');
+        scriptElements.forEach(element => {
+            const scriptSrc = element.getAttribute('data-view-script');
+            if (scriptSrc) {
+                this.loadScript(scriptSrc).then(() => {
+                    // Initialize the view after script loads
+                    this.initializeViewAfterScript(scriptSrc);
+                });
+            }
+        });
+    }
+
+    loadScript(src) {
+        return new Promise((resolve, reject) => {
+            // Check if script is already loaded
+            const existingScript = document.querySelector(`script[src="${src}"]`);
             if (existingScript) {
-                existingScript.remove();
+                console.log(`Script already loaded: ${src}`);
+                resolve();
+                return;
             }
 
-            // Create and load new script
             const script = document.createElement('script');
-            script.id = scriptId;
-            script.src = `${page}/${page}.js`;
-            
-            return new Promise((resolve, reject) => {
-                script.onload = () => {
-                    resolve();
-                };
-                script.onerror = () => {
-                    // Script loading failed, but don't break the page
-                    console.warn(`Failed to load ${page}.js`);
-                    resolve();
-                };
-                document.head.appendChild(script);
-            });
-        } catch (error) {
-            console.error(`Error loading script for ${page}:`, error);
+            script.src = src;
+            script.onload = () => {
+                console.log(`Loaded script: ${src}`);
+                resolve();
+            };
+            script.onerror = () => {
+                console.warn(`Failed to load script: ${src}`);
+                reject(new Error(`Failed to load ${src}`));
+            };
+            document.head.appendChild(script);
+        });
+    }
+
+    initializeViewAfterScript(scriptSrc) {
+        // Initialize specific views based on the script that was loaded
+        if (scriptSrc.includes('specialties')) {
+            setTimeout(() => {
+                if (window.specialtiesView && window.specialtiesView.displaySpecialties) {
+                    window.specialtiesView.displaySpecialties();
+                }
+            }, 100);
         }
+        // Add other views as needed
     }
 
     async showError(message, page = 'dashboard') {
