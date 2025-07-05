@@ -1,0 +1,31 @@
+<header class="content-header">
+    <h1>Locais</h1>
+</header>
+
+<section class="content-section">
+    <div class="list-header">
+        <h2>Gestão de Locais</h2>
+        <button onclick="showAddPlaceForm()">Adicionar Novo Local</button>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Pesquisar locais..." id="place-search" oninput="searchPlaces()">
+        <button onclick="searchPlaces()">Pesquisar</button>
+    </div>
+    <div id="add-place-form" class="hidden form-container">
+        <h3>Adicionar Novo Local</h3>
+        <form id="place-form">
+            <div>
+                <label for="place-name">Nome do Local *</label>
+                <input type="text" id="place-name" name="name" required>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="cancelAddPlace()" class="secondary">Cancelar</button>
+                <button type="submit">Adicionar Local</button>
+            </div>
+        </form>
+        <div id="form-message" class="hidden"></div>
+    </div>
+    <div id="places-list">
+        <p>A carregar locais...</p>
+    </div>
+</section>
