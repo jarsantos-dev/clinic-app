@@ -68,7 +68,7 @@ class ClinicApp {
         
         try {
             // Load HTML content
-            const response = await fetch(`views/${page}.html`);
+            const response = await fetch(`${page}/${page}.html`);
             if (!response.ok) {
                 throw new Error(`Failed to load ${page}.html: ${response.status}`);
             }
@@ -108,7 +108,7 @@ class ClinicApp {
             // Create and load new script
             const script = document.createElement('script');
             script.id = scriptId;
-            script.src = `js/${page}.js`;
+            script.src = `${page}/${page}.js`;
             
             return new Promise((resolve, reject) => {
                 script.onload = () => {
