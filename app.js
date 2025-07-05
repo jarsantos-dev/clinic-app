@@ -57,8 +57,8 @@ class ClinicApp {
             // Load view-specific script
             await this.loadViewScript(view);
             
-            // Initialize view (always, even if script was already loaded)
-            this.initializeView(view);
+            // Refresh view data (using standard interface)
+            this.refreshView(view);
             
             // Update page title
             this.updatePageTitle(view);
@@ -100,38 +100,19 @@ class ClinicApp {
         }
     }
 
-    initializeView(view) {
-        // Call the appropriate view initialization based on the view
-        // Use setTimeout to ensure the view script has fully executed
+    refreshView(view) {
+        // Use a standard interface - call refresh() method if available on the view
+        // This allows each view to handle its own data loading logic
         setTimeout(() => {
             try {
-                switch (view) {
-                    case 'specialties':
-                        if (window.specialtiesView) {
-                            window.specialtiesView.displaySpecialties();
-                        } else {
-                            console.warn('SpecialtiesView not yet available');
-                        }
-                        break;
-                    case 'clinicians':
-                        if (window.cliniciansView) {
-                            window.cliniciansView.displayClinicians();
-                        } else {
-                            console.warn('CliniciansView not yet available');
-                        }
-                        break;
-                    case 'places':
-                        if (window.placesView) {
-                            window.placesView.displayPlaces();
-                        } else {
-                            console.warn('PlacesView not yet available');
-                        }
-                        break;
-                    default:
-                        console.warn(`No initialization defined for view: ${view}`);
+                const viewInstance = window[view + 'View'];
+                if (viewInstance && typeof viewInstance.refresh === 'function') {
+                    viewInstance.refresh();
+                } else {
+                    console.warn(`View ${view} does not implement refresh() method`);
                 }
             } catch (error) {
-                console.warn(`Error initializing view ${view}:`, error);
+                console.warn(`Error refreshing view ${view}:`, error);
             }
         }, 10); // Small delay to ensure script execution is complete
     }
