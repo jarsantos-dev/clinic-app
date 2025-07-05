@@ -15,6 +15,8 @@ class CliniciansView {
 
     // Standard interface method for view refresh
     refresh() {
+        // Reload specialties in case they were updated in other views
+        this.specialties = this.loadSpecialties();
         this.displayClinicians();
     }
 
@@ -29,7 +31,8 @@ class CliniciansView {
             messageDiv.className = 'hidden';
             messageDiv.textContent = '';
             
-            // Populate specialty dropdown
+            // Reload specialties and populate dropdown
+            this.specialties = this.loadSpecialties();
             this.populateSpecialtyDropdown();
             
             // Show the form

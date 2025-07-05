@@ -2,6 +2,8 @@
 class PatientsView {
     constructor() {
         this.patients = this.loadPatients();
+        this.loadSpecialties();
+        this.loadClinicians();
     }
 
     static init() {
@@ -14,6 +16,13 @@ class PatientsView {
 
     // Standard interface method for view refresh
     refresh() {
+        // Reload data from localStorage in case it was updated in other views
+        this.loadSpecialties();
+        this.loadClinicians();
+        
+        // Refresh the dropdown options if the form is visible
+        this.populateAppointmentSpecialtyDropdown();
+        
         this.displayPatients();
     }
 
@@ -238,7 +247,7 @@ class PatientsView {
             
             // Load and populate dropdowns after form is visible
             this.loadSpecialties();
-            // this.populateAppointmentSpecialtyDropdown(); // Temporarily disabled to test hardcoded options
+            this.populateAppointmentSpecialtyDropdown();
             
             // Focus on specialty dropdown
             document.getElementById('appointment-specialty').focus();
