@@ -1,7 +1,7 @@
 // Patients view functionality
 class PatientsView {
     static init() {
-        console.log('Patients view initialized');
+        console.log('Vista de pacientes inicializada');
     }
 
     static showAddPatientForm() {

@@ -2,7 +2,7 @@
 class DashboardView {
     static init() {
         // Dashboard-specific initialization
-        console.log('Dashboard view initialized');
+        console.log('Vista do painel principal inicializada');
     }
 }
 

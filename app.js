@@ -55,7 +55,7 @@ class ClinicApp {
             
             this.currentView = view;
         } catch (error) {
-            console.error('Error loading view:', error);
+            console.error('Erro ao carregar vista:', error);
             this.showError('Erro ao carregar a página. Tente novamente.');
         }
     }
@@ -63,7 +63,7 @@ class ClinicApp {
     async loadContent(view) {
         const response = await fetch(`${view}/content.html`);
         if (!response.ok) {
-            throw new Error(`Failed to load ${view} content`);
+            throw new Error(`Falha ao carregar conteúdo de ${view}`);
         }
         return await response.text();
     }
