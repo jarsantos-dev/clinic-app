@@ -244,12 +244,12 @@ class PatientsView {
             // Store patient ID for form submission
             form.setAttribute('data-patient-id', patientId);
             
-            // Load and populate dropdowns
+            // Show the form first
+            formContainer.classList.remove('hidden');
+            
+            // Load and populate dropdowns after form is visible
             this.loadSpecialties();
             this.populateAppointmentSpecialtyDropdown();
-            
-            // Show the form
-            formContainer.classList.remove('hidden');
             
             // Focus on specialty dropdown
             document.getElementById('appointment-specialty').focus();
