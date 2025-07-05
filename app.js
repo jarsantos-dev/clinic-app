@@ -1,7 +1,6 @@
 class ClinicApp {
     constructor() {
         this.currentView = null;
-        this.loadedScripts = new Set();
         this.init();
     }
 
@@ -71,19 +70,23 @@ class ClinicApp {
     async loadViewScript(view) {
         const scriptPath = `${view}/${view}.js`;
         
-        // Check if script already loaded
-        if (this.loadedScripts.has(scriptPath)) {
-            return;
+        // Always load and execute the script to ensure initialization
+        // Remove any existing script for this view first
+        const existingScript = document.querySelector(`script[data-view="${view}"]`);
+        if (existingScript) {
+            existingScript.remove();
         }
 
         try {
             const response = await fetch(scriptPath);
             if (response.ok) {
                 const scriptContent = await response.text();
+                
+                // Execute script immediately to ensure view is initialized
                 const script = document.createElement('script');
                 script.textContent = scriptContent;
+                script.setAttribute('data-view', view);
                 document.head.appendChild(script);
-                this.loadedScripts.add(scriptPath);
             }
         } catch (error) {
             console.warn(`Could not load script for ${view}:`, error);
@@ -105,7 +108,9 @@ class ClinicApp {
 
     updatePageTitle(view) {
         const titles = {
-            specialties: 'Especialidades - Sistema de Gestão de Clínica'
+            specialties: 'Especialidades - Sistema de Gestão de Clínica',
+            places: 'Locais - Sistema de Gestão de Clínica',
+            clinicians: 'Clínicos - Sistema de Gestão de Clínica'
         };
         
         document.title = titles[view] || 'Sistema de Gestão de Clínica';
