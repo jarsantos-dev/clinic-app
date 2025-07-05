@@ -57,13 +57,11 @@ class SpecialtiesView {
 
     handleAddSpecialtySubmit() {
         const nameInput = document.getElementById('specialty-name');
-        const descriptionInput = document.getElementById('specialty-description');
         const messageDiv = document.getElementById('form-message');
         
         const name = nameInput.value;
-        const description = descriptionInput.value;
         
-        const result = this.addSpecialty(name, description);
+        const result = this.addSpecialty(name);
         
         if (result.success) {
             // Show success message
@@ -95,9 +93,9 @@ class SpecialtiesView {
         }
         // Return some default specialties if none exist
         return [
-            { id: 1, name: 'Cardiologia', description: 'Sistema cardiovascular e coração', createdAt: new Date().toISOString() },
-            { id: 2, name: 'Dermatologia', description: 'Pele, cabelo e unhas', createdAt: new Date().toISOString() },
-            { id: 3, name: 'Pediatria', description: 'Cuidados médicos para crianças', createdAt: new Date().toISOString() }
+            { id: 1, name: 'Cardiologia' },
+            { id: 2, name: 'Dermatologia' },
+            { id: 3, name: 'Pediatria' }
         ];
     }
 
@@ -105,7 +103,7 @@ class SpecialtiesView {
         localStorage.setItem('specialties', JSON.stringify(this.specialties));
     }
 
-    addSpecialty(name, description = '') {
+    addSpecialty(name) {
         if (!name || name.trim() === '') {
             return { success: false, message: 'Nome da especialidade é obrigatório' };
         }
@@ -118,9 +116,7 @@ class SpecialtiesView {
 
         const newSpecialty = {
             id: this.getNextSpecialtyId(),
-            name: name.trim(),
-            description: description.trim(),
-            createdAt: new Date().toISOString()
+            name: name.trim()
         };
 
         this.specialties.push(newSpecialty);
@@ -135,8 +131,7 @@ class SpecialtiesView {
     displaySpecialties(searchTerm = '') {
         const filteredSpecialties = searchTerm 
             ? this.specialties.filter(specialty => 
-                specialty.name.toLowerCase().includes(searchTerm) ||
-                specialty.description.toLowerCase().includes(searchTerm)
+                specialty.name.toLowerCase().includes(searchTerm)
               )
             : this.specialties;
 
@@ -159,9 +154,6 @@ class SpecialtiesView {
                         <button onclick="window.specialtiesView.deleteSpecialty(${specialty.id})" class="secondary">Eliminar</button>
                     </div>
                 </div>
-                <p><strong>ID:</strong> ${specialty.id}</p>
-                ${specialty.description ? `<p><strong>Descrição:</strong> ${specialty.description}</p>` : ''}
-                <p><small>Criado: ${new Date(specialty.createdAt).toLocaleDateString()}</small></p>
             </div>
         `).join('');
 
