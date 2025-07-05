@@ -19,6 +19,7 @@ The project will include **multiple HTML pages/views**, and the data structure w
 * Prioritize simplicity, clarity, and maintainability
 * Ensure strong separation of concerns between content, logic, and styling
 * Use meaningful names and structures to support scalability and readability
+* **On each task do only what it's asked and no more than that**
 
 # HTML Guidelines
 
@@ -26,6 +27,7 @@ The project will include **multiple HTML pages/views**, and the data structure w
 * Each page must include a **common layout structure**, reusable across views
 * Avoid any CSS framework-specific class names (e.g., do not embed Pico.css classes)
 * Add `id`s and `class`es based on structural or content meaning only (e.g., `#employee-form`, `.specialty-card`)
+* **Each view should have its own HTML file(s) and its own JS script file. It's ok to have a generic file for generic functions**
 
 # JavaScript Guidelines
 
@@ -34,6 +36,7 @@ The project will include **multiple HTML pages/views**, and the data structure w
 * Use `localStorage` for storing and retrieving app data
   * Example: `localStorage.setItem("specialties", JSON.stringify([...]))`
 * Structure code to allow reuse across views/pages when applicable
+* **Do not put HTML as string in JavaScript. HTML should be in its own file. It's only acceptable to have HTML as a string for 1 to 3 lines HTML, and you should avoid it**
 
 # Styling Guidelines
 
@@ -47,6 +50,11 @@ The project will include **multiple HTML pages/views**, and the data structure w
 * This is a single-user app; no authentication is needed
 * All code must work offline
 * No automated tests required for now
+
+# Workflow & Communication Guidelines
+
+* **Feel free to create a PR comment with questions before proceeding with code generation. Add a tag "questions" on it for me to know**
+* **Add a tag "ai working" while in session. This way I can know that without having to open the PR**
 
 # Language Guidelines
 
