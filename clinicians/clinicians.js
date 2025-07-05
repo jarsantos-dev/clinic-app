@@ -2,6 +2,7 @@
 class CliniciansView {
     constructor() {
         this.clinicians = this.loadClinicians();
+        this.specialties = this.loadSpecialties();
     }
 
     static init() {
@@ -22,6 +23,9 @@ class CliniciansView {
             form.reset();
             messageDiv.className = 'hidden';
             messageDiv.textContent = '';
+            
+            // Populate specialty dropdown
+            this.populateSpecialtyDropdown();
             
             // Show the form
             formContainer.classList.remove('hidden');
@@ -59,17 +63,24 @@ class CliniciansView {
         const form = document.getElementById('clinician-form');
         const messageDiv = document.getElementById('form-message');
         const nameInput = document.getElementById('clinician-name');
+        const specialtySelect = document.getElementById('clinician-specialty');
         
-        if (!form || !messageDiv || !nameInput) return;
+        if (!form || !messageDiv || !nameInput || !specialtySelect) return;
 
         const name = nameInput.value.trim();
+        const specialtyId = parseInt(specialtySelect.value);
         
         if (!name) {
             this.showMessage('Nome do clínico é obrigatório', 'error');
             return;
         }
 
-        const result = this.addClinician(name);
+        if (!specialtyId) {
+            this.showMessage('Especialidade é obrigatória', 'error');
+            return;
+        }
+
+        const result = this.addClinician(name, specialtyId);
         
         if (result.success) {
             this.showMessage('Clínico adicionado com sucesso', 'success');
@@ -100,13 +111,46 @@ class CliniciansView {
         return [];
     }
 
+    loadSpecialties() {
+        const stored = localStorage.getItem('specialties');
+        if (stored) {
+            return JSON.parse(stored);
+        }
+        // Return default specialties if none exist
+        return [
+            { id: 1, name: 'Cardiologia' },
+            { id: 2, name: 'Dermatologia' },
+            { id: 3, name: 'Pediatria' }
+        ];
+    }
+
+    populateSpecialtyDropdown() {
+        const specialtySelect = document.getElementById('clinician-specialty');
+        if (!specialtySelect) return;
+        
+        // Clear existing options except the first placeholder
+        specialtySelect.innerHTML = '<option value="">Selecione uma especialidade...</option>';
+        
+        // Add specialty options
+        this.specialties.forEach(specialty => {
+            const option = document.createElement('option');
+            option.value = specialty.id;
+            option.textContent = specialty.name;
+            specialtySelect.appendChild(option);
+        });
+    }
+
     saveClinicians() {
         localStorage.setItem('clinicians', JSON.stringify(this.clinicians));
     }
 
-    addClinician(name) {
+    addClinician(name, specialtyId) {
         if (!name || name.trim() === '') {
             return { success: false, message: 'Nome do clínico é obrigatório' };
+        }
+
+        if (!specialtyId) {
+            return { success: false, message: 'Especialidade é obrigatória' };
         }
 
         // Check for duplicate names
@@ -118,6 +162,7 @@ class CliniciansView {
         const newClinician = {
             id: this.getNextClinicianId(),
             name: name.trim(),
+            specialtyId: specialtyId,
             createdAt: new Date().toISOString()
         };
 
@@ -128,6 +173,11 @@ class CliniciansView {
 
     getNextClinicianId() {
         return this.clinicians.length > 0 ? Math.max(...this.clinicians.map(c => c.id)) + 1 : 1;
+    }
+
+    getSpecialtyName(specialtyId) {
+        const specialty = this.specialties.find(s => s.id === specialtyId);
+        return specialty ? specialty.name : 'Especialidade não encontrada';
     }
 
     displayClinicians(searchTerm = '') {
@@ -158,6 +208,7 @@ class CliniciansView {
                         <button onclick="window.cliniciansView.deleteClinician(${clinician.id})" class="secondary">Eliminar</button>
                     </div>
                 </div>
+                <p><strong>Especialidade:</strong> ${this.escapeHtml(this.getSpecialtyName(clinician.specialtyId))}</p>
                 <p><span>Registado: ${new Date(clinician.createdAt).toLocaleDateString('pt-PT')}</span></p>
             </div>
         `).join('');
@@ -187,7 +238,22 @@ class CliniciansView {
             return;
         }
 
+        // Create specialty options string for prompt
+        const specialtyOptions = this.specialties.map(s => `${s.id} - ${s.name}`).join('\n');
+        const currentSpecialtyName = this.getSpecialtyName(clinician.specialtyId);
+        const specialtyPrompt = `Selecione a especialidade (digite o número):\n${specialtyOptions}\n\nEspecialidade atual: ${currentSpecialtyName}`;
+        
+        const specialtyInput = prompt(specialtyPrompt, clinician.specialtyId.toString());
+        if (specialtyInput === null) return; // User cancelled
+
+        const newSpecialtyId = parseInt(specialtyInput);
+        if (!newSpecialtyId || !this.specialties.find(s => s.id === newSpecialtyId)) {
+            alert('Especialidade inválida');
+            return;
+        }
+
         clinician.name = trimmedName;
+        clinician.specialtyId = newSpecialtyId;
         this.saveClinicians();
         this.displayClinicians();
     }
