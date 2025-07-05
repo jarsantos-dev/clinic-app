@@ -30,9 +30,9 @@ class ClinicApp {
     }
 
     handleUrlChange() {
-        // Get view from URL hash, default to dashboard
+        // Get view from URL hash, default to specialties
         const hash = window.location.hash.slice(1); // Remove #
-        const view = hash || 'dashboard';
+        const view = hash || 'specialties';
         this.loadView(view);
     }
 
@@ -105,12 +105,7 @@ class ClinicApp {
 
     updatePageTitle(view) {
         const titles = {
-            dashboard: 'Painel Principal - Sistema de Gestão de Clínica',
-            patients: 'Pacientes - Sistema de Gestão de Clínica',
-            appointments: 'Consultas - Sistema de Gestão de Clínica',
-            doctors: 'Médicos - Sistema de Gestão de Clínica',
-            specialties: 'Especialidades - Sistema de Gestão de Clínica',
-            reports: 'Relatórios - Sistema de Gestão de Clínica'
+            specialties: 'Especialidades - Sistema de Gestão de Clínica'
         };
         
         document.title = titles[view] || 'Sistema de Gestão de Clínica';
