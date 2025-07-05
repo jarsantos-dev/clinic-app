@@ -1,0 +1,31 @@
+<header class="content-header">
+    <h1>Pacientes</h1>
+</header>
+
+<section class="content-section">
+    <div class="list-header">
+        <h2>Gestão de Pacientes</h2>
+        <button onclick="showAddPatientForm()">Adicionar Novo Paciente</button>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Pesquisar pacientes..." id="patient-search" oninput="searchPatients()">
+        <button onclick="searchPatients()">Pesquisar</button>
+    </div>
+    <div id="add-patient-form" class="hidden form-container">
+        <h3>Adicionar Novo Paciente</h3>
+        <form id="patient-form">
+            <div>
+                <label for="patient-name">Nome do Paciente *</label>
+                <input type="text" id="patient-name" name="name" required>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="cancelAddPatient()" class="secondary">Cancelar</button>
+                <button type="submit">Adicionar Paciente</button>
+            </div>
+        </form>
+        <div id="form-message" class="hidden"></div>
+    </div>
+    <div id="patients-list">
+        <p>A carregar pacientes...</p>
+    </div>
+</section>

@@ -105,7 +105,10 @@ class ClinicApp {
 
     updatePageTitle(view) {
         const titles = {
-            specialties: 'Especialidades - Sistema de Gestão de Clínica'
+            patients: 'Pacientes - Sistema de Gestão de Clínica',
+            clinicians: 'Clínicos - Sistema de Gestão de Clínica',
+            specialties: 'Especialidades - Sistema de Gestão de Clínica',
+            places: 'Locais - Sistema de Gestão de Clínica'
         };
         
         document.title = titles[view] || 'Sistema de Gestão de Clínica';
