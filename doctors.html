@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Médicos - Sistema de Gestão de Clínica</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="layout-wrapper">
+            <!-- Left Sidebar Navigation -->
+            <nav class="sidebar">
+                <header class="sidebar-header">
+                    <h3>Gestão de Clínica</h3>
+                </header>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html">Painel Principal</a></li>
+                    <li><a href="patients.html">Pacientes</a></li>
+                    <li><a href="appointments.html">Consultas</a></li>
+                    <li><a href="doctors.html" class="active">Médicos</a></li>
+                    <li><a href="specialties.html">Especialidades</a></li>
+                    <li><a href="reports.html">Relatórios</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <header class="content-header">
+                    <h1>Médicos</h1>
+                </header>
+                
+                <section class="content-section">
+                    <div class="welcome-message">
+                        <h2>Gestão de Médicos</h2>
+                        <p>Visualize e gira os registos de médicos da clínica.</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="doctors/doctors.js"></script>
+</body>
+</html>
