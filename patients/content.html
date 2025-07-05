@@ -25,6 +25,40 @@
         </form>
         <div id="form-message" class="hidden"></div>
     </div>
+    <div id="create-appointment-form" class="hidden form-container">
+        <h3>Criar Consulta</h3>
+        <form id="appointment-form">
+            <div>
+                <label for="appointment-patient">Paciente *</label>
+                <input type="text" id="appointment-patient" name="patient" required readonly>
+            </div>
+            <div>
+                <label for="appointment-specialty">Especialidade *</label>
+                <select id="appointment-specialty" name="specialty" required>
+                    <option value="">Selecione uma especialidade...</option>
+                </select>
+            </div>
+            <div>
+                <label for="appointment-clinician">Clínico *</label>
+                <select id="appointment-clinician" name="clinician" required>
+                    <option value="">Selecione um clínico...</option>
+                </select>
+            </div>
+            <div>
+                <label for="appointment-datetime">Data e Hora *</label>
+                <input type="datetime-local" id="appointment-datetime" name="datetime" required>
+            </div>
+            <div>
+                <label for="appointment-duration">Duração (minutos) *</label>
+                <input type="number" id="appointment-duration" name="duration" min="15" max="240" step="15" value="30" required>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="cancelCreateAppointment()" class="secondary">Cancelar</button>
+                <button type="submit">Criar Consulta</button>
+            </div>
+        </form>
+        <div id="appointment-form-message" class="hidden"></div>
+    </div>
     <div id="patients-list">
         <p>A carregar pacientes...</p>
     </div>
