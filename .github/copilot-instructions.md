@@ -20,6 +20,7 @@ The project will include **multiple HTML pages/views**, and the data structure w
 * Ensure strong separation of concerns between content, logic, and styling
 * Use meaningful names and structures to support scalability and readability
 * **On each task do only what it's asked and no more than that**
+* **Do not add fields/properties to entities that are not explicitly requested** - if an issue asks for an entity with only "name", do not add additional fields like createdAt, updatedAt, etc.
 
 # HTML Guidelines
 
