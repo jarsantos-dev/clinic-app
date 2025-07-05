@@ -1,0 +1,35 @@
+<header class="content-header">
+    <h1>Especialidades</h1>
+</header>
+
+<section class="content-section">
+    <div class="list-header">
+        <h2>Gestão de Especialidades</h2>
+        <button onclick="showAddSpecialtyForm()">Adicionar Nova Especialidade</button>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Pesquisar especialidades..." id="specialty-search" oninput="searchSpecialties()">
+        <button onclick="searchSpecialties()">Pesquisar</button>
+    </div>
+    <div id="add-specialty-form" class="hidden form-container">
+        <h3>Adicionar Nova Especialidade</h3>
+        <form id="specialty-form">
+            <div>
+                <label for="specialty-name">Nome da Especialidade *</label>
+                <input type="text" id="specialty-name" name="name" required>
+            </div>
+            <div>
+                <label for="specialty-description">Descrição</label>
+                <textarea id="specialty-description" name="description" rows="3"></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="cancelAddSpecialty()" class="secondary">Cancelar</button>
+                <button type="submit">Adicionar Especialidade</button>
+            </div>
+        </form>
+        <div id="form-message" class="hidden"></div>
+    </div>
+    <div id="specialties-list">
+        <p>A carregar especialidades...</p>
+    </div>
+</section>
