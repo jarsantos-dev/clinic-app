@@ -49,6 +49,9 @@ class ClinicApp {
             // Load view-specific script
             await this.loadViewScript(view);
             
+            // Ensure view is initialized after DOM is ready
+            this.initializeView(view);
+            
             // Update page title
             this.updatePageTitle(view);
             
@@ -70,27 +73,58 @@ class ClinicApp {
     async loadViewScript(view) {
         const scriptPath = `${view}/${view}.js`;
         
-        // Always load and execute the script to ensure initialization
-        // Remove any existing script for this view first
+        // Check if script already loaded, if not load it
         const existingScript = document.querySelector(`script[data-view="${view}"]`);
-        if (existingScript) {
-            existingScript.remove();
-        }
-
-        try {
-            const response = await fetch(scriptPath);
-            if (response.ok) {
-                const scriptContent = await response.text();
-                
-                // Execute script immediately to ensure view is initialized
-                const script = document.createElement('script');
-                script.textContent = scriptContent;
-                script.setAttribute('data-view', view);
-                document.head.appendChild(script);
+        if (!existingScript) {
+            try {
+                console.log(`Loading script for ${view}`);
+                const response = await fetch(scriptPath);
+                if (response.ok) {
+                    const scriptContent = await response.text();
+                    
+                    // Execute script to define classes and functions
+                    const script = document.createElement('script');
+                    script.textContent = scriptContent;
+                    script.setAttribute('data-view', view);
+                    document.head.appendChild(script);
+                    console.log(`Script loaded for ${view}`);
+                }
+            } catch (error) {
+                console.warn(`Could not load script for ${view}:`, error);
             }
-        } catch (error) {
-            console.warn(`Could not load script for ${view}:`, error);
         }
+    }
+
+    initializeView(view) {
+        // Call the init method for the specific view
+        setTimeout(() => {
+            try {
+                switch (view) {
+                    case 'specialties':
+                        if (window.SpecialtiesView && window.SpecialtiesView.init) {
+                            console.log('Calling SpecialtiesView.init()');
+                            window.SpecialtiesView.init();
+                        }
+                        break;
+                    case 'places':
+                        if (window.PlacesView && window.PlacesView.init) {
+                            console.log('Calling PlacesView.init()');
+                            window.PlacesView.init();
+                        }
+                        break;
+                    case 'clinicians':
+                        if (window.CliniciansView && window.CliniciansView.init) {
+                            console.log('Calling CliniciansView.init()');
+                            window.CliniciansView.init();
+                        }
+                        break;
+                    default:
+                        console.warn(`No initialization found for view: ${view}`);
+                }
+            } catch (error) {
+                console.warn(`Error initializing view ${view}:`, error);
+            }
+        }, 50);
     }
 
     updateActiveNavigation(view) {

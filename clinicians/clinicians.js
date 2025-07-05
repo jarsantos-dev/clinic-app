@@ -8,8 +8,17 @@ class CliniciansView {
         window.cliniciansView = new CliniciansView();
         console.log('Vista de clínicos inicializada');
         
-        // Display clinicians when page loads
-        window.cliniciansView.displayClinicians();
+        // Wait for DOM to be ready before displaying clinicians
+        const initDisplay = () => {
+            const listContainer = document.getElementById('clinicians-list');
+            if (listContainer) {
+                window.cliniciansView.displayClinicians();
+            } else {
+                // If element not found, try again after a short delay
+                setTimeout(initDisplay, 10);
+            }
+        };
+        initDisplay();
     }
 
     showAddClinicianForm() {
@@ -222,6 +231,9 @@ class CliniciansView {
         return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     }
 }
+
+// Make class available globally
+window.CliniciansView = CliniciansView;
 
 // Initialize when view is loaded
 CliniciansView.init();

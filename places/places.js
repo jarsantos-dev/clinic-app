@@ -8,8 +8,17 @@ class PlacesView {
         window.placesView = new PlacesView();
         console.log('Vista de locais inicializada');
         
-        // Display places when page loads
-        window.placesView.displayPlaces();
+        // Wait for DOM to be ready before displaying places
+        const initDisplay = () => {
+            const listContainer = document.getElementById('places-list');
+            if (listContainer) {
+                window.placesView.displayPlaces();
+            } else {
+                // If element not found, try again after a short delay
+                setTimeout(initDisplay, 10);
+            }
+        };
+        initDisplay();
     }
 
     showAddPlaceForm() {
@@ -175,6 +184,9 @@ class PlacesView {
         }
     }
 }
+
+// Make class available globally
+window.PlacesView = PlacesView;
 
 // Initialize when view is loaded
 PlacesView.init();

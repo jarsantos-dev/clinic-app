@@ -8,8 +8,17 @@ class SpecialtiesView {
         window.specialtiesView = new SpecialtiesView();
         console.log('Vista de especialidades inicializada');
         
-        // Display specialties when page loads
-        window.specialtiesView.displaySpecialties();
+        // Wait for DOM to be ready before displaying specialties
+        const initDisplay = () => {
+            const listContainer = document.getElementById('specialties-list');
+            if (listContainer) {
+                window.specialtiesView.displaySpecialties();
+            } else {
+                // If element not found, try again after a short delay
+                setTimeout(initDisplay, 10);
+            }
+        };
+        initDisplay();
     }
 
     showAddSpecialtyForm() {
@@ -173,6 +182,9 @@ class SpecialtiesView {
         }
     }
 }
+
+// Make class available globally
+window.SpecialtiesView = SpecialtiesView;
 
 // Initialize when view is loaded
 SpecialtiesView.init();
