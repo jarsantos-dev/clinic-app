@@ -1,10 +1,20 @@
+<script>
+    // Set page title when this view loads
+    setTimeout(() => {
+        const titleElement = document.getElementById('page-title');
+        if (titleElement) {
+            titleElement.textContent = 'Especialidades';
+        }
+    }, 100);
+</script>
+
 <div class="list-header">
     <h2>Gestão de Especialidades</h2>
-    <button onclick="app.showAddSpecialtyForm()">Adicionar Nova Especialidade</button>
+    <button onclick="showAddSpecialtyForm()">Adicionar Nova Especialidade</button>
 </div>
 <div class="search-container">
-    <input type="text" placeholder="Pesquisar especialidades..." id="specialty-search" oninput="app.searchSpecialties()">
-    <button onclick="app.searchSpecialties()">Pesquisar</button>
+    <input type="text" placeholder="Pesquisar especialidades..." id="specialty-search" oninput="searchSpecialties()">
+    <button onclick="searchSpecialties()">Pesquisar</button>
 </div>
 <div id="add-specialty-form" class="hidden form-container">
     <h3>Adicionar Nova Especialidade</h3>
@@ -18,7 +28,7 @@
             <textarea id="specialty-description" name="description" rows="3"></textarea>
         </div>
         <div class="form-actions">
-            <button type="button" onclick="app.cancelAddSpecialty()" class="secondary">Cancelar</button>
+            <button type="button" onclick="cancelAddSpecialty()" class="secondary">Cancelar</button>
             <button type="submit">Adicionar Especialidade</button>
         </div>
     </form>

@@ -1,6 +1,16 @@
+<script>
+    // Set page title when this view loads
+    setTimeout(() => {
+        const titleElement = document.getElementById('page-title');
+        if (titleElement) {
+            titleElement.textContent = 'Relatórios';
+        }
+    }, 100);
+</script>
+
 <div class="list-header">
     <h2>Relatórios e Análises</h2>
-    <button onclick="app.generateReport()">Gerar Relatório</button>
+    <button onclick="generateReport()">Gerar Relatório</button>
 </div>
 <div class="card-grid">
     <div class="card">

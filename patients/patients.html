@@ -1,10 +1,20 @@
+<script>
+    // Set page title when this view loads
+    setTimeout(() => {
+        const titleElement = document.getElementById('page-title');
+        if (titleElement) {
+            titleElement.textContent = 'Pacientes';
+        }
+    }, 100);
+</script>
+
 <div class="list-header">
     <h2>Gestão de Pacientes</h2>
-    <button onclick="app.showAddPatientForm()">Adicionar Novo Paciente</button>
+    <button onclick="showAddPatientForm()">Adicionar Novo Paciente</button>
 </div>
 <div class="search-container">
     <input type="text" placeholder="Pesquisar pacientes..." id="patient-search">
-    <button onclick="app.searchPatients()">Pesquisar</button>
+    <button onclick="searchPatients()">Pesquisar</button>
 </div>
 <div id="patients-list">
     <p>A lista de pacientes será exibida aqui...</p>

@@ -1,10 +1,20 @@
+<script>
+    // Set page title when this view loads
+    setTimeout(() => {
+        const titleElement = document.getElementById('page-title');
+        if (titleElement) {
+            titleElement.textContent = 'Médicos';
+        }
+    }, 100);
+</script>
+
 <div class="list-header">
     <h2>Gestão de Médicos</h2>
-    <button onclick="app.showAddDoctorForm()">Adicionar Novo Médico</button>
+    <button onclick="showAddDoctorForm()">Adicionar Novo Médico</button>
 </div>
 <div class="search-container">
     <input type="text" placeholder="Pesquisar médicos..." id="doctor-search">
-    <button onclick="app.searchDoctors()">Pesquisar</button>
+    <button onclick="searchDoctors()">Pesquisar</button>
 </div>
 <div id="doctors-list">
     <p>A lista de médicos será exibida aqui...</p>

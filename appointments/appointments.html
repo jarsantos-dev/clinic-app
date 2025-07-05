@@ -1,10 +1,20 @@
+<script>
+    // Set page title when this view loads
+    setTimeout(() => {
+        const titleElement = document.getElementById('page-title');
+        if (titleElement) {
+            titleElement.textContent = 'Consultas';
+        }
+    }, 100);
+</script>
+
 <div class="list-header">
     <h2>Gestão de Consultas</h2>
-    <button onclick="app.showAddAppointmentForm()">Agendar Consulta</button>
+    <button onclick="showAddAppointmentForm()">Agendar Consulta</button>
 </div>
 <div class="search-container">
     <input type="text" placeholder="Pesquisar consultas..." id="appointment-search">
-    <button onclick="app.searchAppointments()">Pesquisar</button>
+    <button onclick="searchAppointments()">Pesquisar</button>
 </div>
 <div id="appointments-list">
     <p>A lista de consultas será exibida aqui...</p>
