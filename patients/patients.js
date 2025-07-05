@@ -12,6 +12,11 @@ class PatientsView {
         window.patientsView.displayPatients();
     }
 
+    // Standard interface method for view refresh
+    refresh() {
+        this.displayPatients();
+    }
+
     showAddPatientForm() {
         const formContainer = document.getElementById('add-patient-form');
         const form = document.getElementById('patient-form');
