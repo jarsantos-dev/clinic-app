@@ -6,7 +6,8 @@ class ClinicApp {
             specialties: { title: 'Especialidades - Sistema de Gestão de Clínica' },
             clinicians: { title: 'Clínicos - Sistema de Gestão de Clínica' },
             places: { title: 'Locais - Sistema de Gestão de Clínica' },
-            patients: { title: 'Pacientes - Sistema de Gestão de Clínica' }
+            patients: { title: 'Pacientes - Sistema de Gestão de Clínica' },
+            'patient-detail': { title: 'Detalhe do Paciente - Sistema de Gestão de Clínica' }
         };
         this.init();
     }
@@ -40,7 +41,12 @@ class ClinicApp {
         // Get view from URL hash, default to specialties
         const hash = window.location.hash.slice(1); // Remove #
         const view = hash || 'specialties';
-        this.loadView(view);
+        
+        // Handle patient-detail routes with parameters (e.g., #patient-detail/1)
+        const viewParts = view.split('/');
+        const baseView = viewParts[0];
+        
+        this.loadView(baseView);
     }
 
     async loadView(view) {

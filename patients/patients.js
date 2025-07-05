@@ -2,6 +2,7 @@
 class PatientsView {
     constructor() {
         this.patients = this.loadPatients();
+        this.appointments = this.loadAppointments();
     }
 
     static init() {
@@ -139,6 +140,7 @@ class PatientsView {
                 <div class="card-header">
                     <h3>${this.escapeHtml(patient.name)}</h3>
                     <div class="card-actions">
+                        <button onclick="window.patientsView.viewPatientDetail(${patient.id})">Ver Detalhes</button>
                         <button onclick="window.patientsView.createAppointment(${patient.id})">Criar Consulta</button>
                         <button onclick="window.patientsView.editPatient(${patient.id})">Editar</button>
                         <button onclick="window.patientsView.deletePatient(${patient.id})" class="secondary">Eliminar</button>
@@ -210,6 +212,10 @@ class PatientsView {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    viewPatientDetail(patientId) {
+        window.location.hash = `patient-detail/${patientId}`;
     }
 
     // Appointment Management Methods
