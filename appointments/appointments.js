@@ -1,7 +1,7 @@
 // Appointments view functionality
 class AppointmentsView {
     static init() {
-        console.log('Appointments view initialized');
+        console.log('Vista de consultas inicializada');
     }
 
     static showAddAppointmentForm() {

@@ -1,7 +1,7 @@
 // Reports view functionality
 class ReportsView {
     static init() {
-        console.log('Reports view initialized');
+        console.log('Vista de relatórios inicializada');
     }
 
     static generateReport() {

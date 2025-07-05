@@ -1,7 +1,7 @@
 // Doctors view functionality
 class DoctorsView {
     static init() {
-        console.log('Doctors view initialized');
+        console.log('Vista de médicos inicializada');
     }
 
     static showAddDoctorForm() {

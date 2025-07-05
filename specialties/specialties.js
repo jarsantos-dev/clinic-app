@@ -6,7 +6,7 @@ class SpecialtiesView {
 
     static init() {
         window.specialtiesView = new SpecialtiesView();
-        console.log('Specialties view initialized');
+        console.log('Vista de especialidades inicializada');
         
         // Display specialties when page loads
         window.specialtiesView.displaySpecialties();
