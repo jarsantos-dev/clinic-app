@@ -85,10 +85,6 @@ class SpecialtiesView {
         }
     }
 
-    searchSpecialties() {
-        const searchTerm = document.getElementById('specialty-search').value.toLowerCase();
-        this.displaySpecialties(searchTerm);
-    }
 
     // Specialty Data Management Methods
     loadSpecialties() {
@@ -133,24 +129,16 @@ class SpecialtiesView {
         return this.specialties.length > 0 ? Math.max(...this.specialties.map(s => s.id)) + 1 : 1;
     }
 
-    displaySpecialties(searchTerm = '') {
-        const filteredSpecialties = searchTerm 
-            ? this.specialties.filter(specialty => 
-                specialty.name.toLowerCase().includes(searchTerm)
-              )
-            : this.specialties;
-
+    displaySpecialties() {
         const listContainer = document.getElementById('specialties-list');
         if (!listContainer) return;
 
-        if (filteredSpecialties.length === 0) {
-            listContainer.innerHTML = searchTerm 
-                ? `<p>Nenhuma especialidade encontrada para "${searchTerm}"</p>`
-                : '<p>Nenhuma especialidade disponível. Adicione uma para começar!</p>';
+        if (this.specialties.length === 0) {
+            listContainer.innerHTML = '<p>Nenhuma especialidade disponível. Adicione uma para começar!</p>';
             return;
         }
 
-        const specialtyCards = filteredSpecialties.map(specialty => `
+        const specialtyCards = this.specialties.map(specialty => `
             <div class="card specialty-card" data-specialty-id="${specialty.id}">
                 <div class="card-header">
                     <h3 class="card-title">${specialty.name}</h3>
@@ -185,4 +173,3 @@ SpecialtiesView.init();
 // Export functions to global scope for onclick handlers
 window.showAddSpecialtyForm = () => window.specialtiesView.showAddSpecialtyForm();
 window.cancelAddSpecialty = () => window.specialtiesView.cancelAddSpecialty();
-window.searchSpecialties = () => window.specialtiesView.searchSpecialties();

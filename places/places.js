@@ -85,10 +85,7 @@ class PlacesView {
         }
     }
 
-    searchPlaces() {
-        const searchTerm = document.getElementById('place-search').value.toLowerCase();
-        this.displayPlaces(searchTerm);
-    }
+
 
     // Place Data Management Methods
     loadPlaces() {
@@ -134,24 +131,16 @@ class PlacesView {
         return this.places.length > 0 ? Math.max(...this.places.map(p => p.id)) + 1 : 1;
     }
 
-    displayPlaces(searchTerm = '') {
-        const filteredPlaces = searchTerm 
-            ? this.places.filter(place => 
-                place.name.toLowerCase().includes(searchTerm)
-              )
-            : this.places;
-
+    displayPlaces() {
         const listContainer = document.getElementById('places-list');
         if (!listContainer) return;
 
-        if (filteredPlaces.length === 0) {
-            listContainer.innerHTML = searchTerm 
-                ? `<p>Nenhum local encontrado para "${searchTerm}"</p>`
-                : '<p>Nenhum local disponível. Adicione um para começar!</p>';
+        if (this.places.length === 0) {
+            listContainer.innerHTML = '<p>Nenhum local disponível. Adicione um para começar!</p>';
             return;
         }
 
-        const placeCards = filteredPlaces.map(place => `
+        const placeCards = this.places.map(place => `
             <div class="card place-card" data-place-id="${place.id}">
                 <div class="card-header">
                     <h3 class="card-title">${place.name}</h3>
@@ -186,4 +175,3 @@ PlacesView.init();
 // Export functions to global scope for onclick handlers
 window.showAddPlaceForm = () => window.placesView.showAddPlaceForm();
 window.cancelAddPlace = () => window.placesView.cancelAddPlace();
-window.searchPlaces = () => window.placesView.searchPlaces();

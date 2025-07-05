@@ -100,11 +100,7 @@ class CliniciansView {
         }
     }
 
-    searchClinicians() {
-        const searchInput = document.getElementById('clinician-search');
-        const searchTerm = searchInput ? searchInput.value.trim() : '';
-        this.displayClinicians(searchTerm);
-    }
+
 
     // Clinician Data Management Methods
     loadClinicians() {
@@ -181,26 +177,16 @@ class CliniciansView {
         return specialty ? specialty.name : 'Especialidade não encontrada';
     }
 
-    displayClinicians(searchTerm = '') {
+    displayClinicians() {
         const container = document.getElementById('clinicians-list');
         if (!container) return;
 
-        let filteredClinicians = this.clinicians;
-        
-        if (searchTerm) {
-            filteredClinicians = this.clinicians.filter(clinician =>
-                clinician.name.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
-
-        if (filteredClinicians.length === 0) {
-            container.innerHTML = searchTerm ? 
-                '<p>Nenhum clínico encontrado para a pesquisa.</p>' : 
-                '<p>Nenhum clínico registado. Adicione o primeiro clínico.</p>';
+        if (this.clinicians.length === 0) {
+            container.innerHTML = '<p>Nenhum clínico registado. Adicione o primeiro clínico.</p>';
             return;
         }
 
-        const cliniciansHtml = filteredClinicians.map(clinician => `
+        const cliniciansHtml = this.clinicians.map(clinician => `
             <div class="card clinician-card">
                 <div class="card-header">
                     <h3 class="card-title">${this.escapeHtml(clinician.name)}</h3>
@@ -295,4 +281,3 @@ CliniciansView.init();
 // Export functions to global scope for onclick handlers
 window.showAddClinicianForm = () => window.cliniciansView.showAddClinicianForm();
 window.cancelAddClinician = () => window.cliniciansView.cancelAddClinician();
-window.searchClinicians = () => window.cliniciansView.searchClinicians();

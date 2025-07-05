@@ -78,11 +78,7 @@ class PatientsView {
         }
     }
 
-    searchPatients() {
-        const searchInput = document.getElementById('patient-search');
-        const searchTerm = searchInput ? searchInput.value.trim() : '';
-        this.displayPatients(searchTerm);
-    }
+
 
     // Patient Data Management Methods
     loadPatients() {
@@ -123,24 +119,17 @@ class PatientsView {
         return this.patients.length > 0 ? Math.max(...this.patients.map(p => p.id)) + 1 : 1;
     }
 
-    displayPatients(searchTerm = '') {
+    displayPatients() {
         const container = document.getElementById('patients-list');
         if (!container) return;
 
-        // Filter patients based on search term
-        const filteredPatients = this.patients.filter(patient =>
-            patient.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-
-        if (filteredPatients.length === 0) {
-            container.innerHTML = searchTerm 
-                ? '<p>Nenhum paciente encontrado para o termo pesquisado.</p>'
-                : '<p>Nenhum paciente registado. Adicione o primeiro paciente.</p>';
+        if (this.patients.length === 0) {
+            container.innerHTML = '<p>Nenhum paciente registado. Adicione o primeiro paciente.</p>';
             return;
         }
 
         // Generate HTML for patients list
-        const patientsHtml = filteredPatients.map(patient => `
+        const patientsHtml = this.patients.map(patient => `
             <div class="card patient-card" data-patient-id="${patient.id}">
                 <div class="card-header">
                     <h3>${this.escapeHtml(patient.name)}</h3>
@@ -224,4 +213,3 @@ PatientsView.init();
 // Export functions to global scope for onclick handlers
 window.showAddPatientForm = () => window.patientsView.showAddPatientForm();
 window.cancelAddPatient = () => window.patientsView.cancelAddPatient();
-window.searchPatients = () => window.patientsView.searchPatients();
