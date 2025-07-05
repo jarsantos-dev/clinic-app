@@ -2,31 +2,39 @@ class ClinicApp {
     constructor() {
         this.currentView = null;
         this.loadedScripts = new Set();
+        this.viewConfig = {
+            specialties: { title: 'Especialidades - Sistema de Gestão de Clínica' },
+            clinicians: { title: 'Clínicos - Sistema de Gestão de Clínica' },
+            places: { title: 'Locais - Sistema de Gestão de Clínica' },
+            patients: { title: 'Pacientes - Sistema de Gestão de Clínica' }
+        };
         this.init();
     }
 
     init() {
-        // Handle initial load and URL changes
+        // Handle hash changes and browser navigation
+        window.addEventListener('hashchange', () => this.handleUrlChange());
         window.addEventListener('popstate', () => this.handleUrlChange());
         this.setupNavigation();
         this.handleUrlChange();
     }
 
     setupNavigation() {
-        // Set up navigation click handlers
+        // Enhance navigation links with SPA behavior while preserving natural href functionality
         document.querySelectorAll('[data-view]').forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const view = link.getAttribute('data-view');
-                this.navigateTo(view);
+                // Only handle if it's a normal left-click without modifier keys
+                if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                    // Let the browser handle the hash navigation naturally
+                    // The hashchange event will trigger our SPA loading
+                }
             });
         });
     }
 
     navigateTo(view) {
-        // Update URL without page reload
-        history.pushState({ view }, '', `#${view}`);
-        this.loadView(view);
+        // Update URL hash - this will trigger hashchange event
+        window.location.hash = view;
     }
 
     handleUrlChange() {
@@ -104,14 +112,8 @@ class ClinicApp {
     }
 
     updatePageTitle(view) {
-        const titles = {
-            patients: 'Pacientes - Sistema de Gestão de Clínica',
-            clinicians: 'Clínicos - Sistema de Gestão de Clínica',
-            specialties: 'Especialidades - Sistema de Gestão de Clínica',
-            places: 'Locais - Sistema de Gestão de Clínica'
-        };
-        
-        document.title = titles[view] || 'Sistema de Gestão de Clínica';
+        const viewConfig = this.viewConfig[view];
+        document.title = viewConfig?.title || 'Sistema de Gestão de Clínica';
     }
 
     showError(message) {
