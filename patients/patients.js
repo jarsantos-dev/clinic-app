@@ -249,7 +249,7 @@ class PatientsView {
             
             // Load and populate dropdowns after form is visible
             this.loadSpecialties();
-            this.populateAppointmentSpecialtyDropdown();
+            // this.populateAppointmentSpecialtyDropdown(); // Temporarily disabled to test hardcoded options
             
             // Focus on specialty dropdown
             document.getElementById('appointment-specialty').focus();
