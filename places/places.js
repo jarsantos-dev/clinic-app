@@ -12,6 +12,11 @@ class PlacesView {
         window.placesView.displayPlaces();
     }
 
+    // Standard interface method for view refresh
+    refresh() {
+        this.displayPlaces();
+    }
+
     showAddPlaceForm() {
         const formContainer = document.getElementById('add-place-form');
         const form = document.getElementById('place-form');

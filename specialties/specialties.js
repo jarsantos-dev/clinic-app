@@ -12,6 +12,11 @@ class SpecialtiesView {
         window.specialtiesView.displaySpecialties();
     }
 
+    // Standard interface method for view refresh
+    refresh() {
+        this.displaySpecialties();
+    }
+
     showAddSpecialtyForm() {
         const formContainer = document.getElementById('add-specialty-form');
         const form = document.getElementById('specialty-form');

@@ -13,6 +13,11 @@ class CliniciansView {
         window.cliniciansView.displayClinicians();
     }
 
+    // Standard interface method for view refresh
+    refresh() {
+        this.displayClinicians();
+    }
+
     showAddClinicianForm() {
         const formContainer = document.getElementById('add-clinician-form');
         const form = document.getElementById('clinician-form');

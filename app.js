@@ -58,6 +58,9 @@ class ClinicApp {
             // Load view-specific script
             await this.loadViewScript(view);
             
+            // Refresh view data (using standard interface)
+            this.refreshView(view);
+            
             // Update page title
             this.updatePageTitle(view);
             
@@ -96,6 +99,23 @@ class ClinicApp {
         } catch (error) {
             console.warn(`Could not load script for ${view}:`, error);
         }
+    }
+
+    refreshView(view) {
+        // Use a standard interface - call refresh() method if available on the view
+        // This allows each view to handle its own data loading logic
+        setTimeout(() => {
+            try {
+                const viewInstance = window[view + 'View'];
+                if (viewInstance && typeof viewInstance.refresh === 'function') {
+                    viewInstance.refresh();
+                } else {
+                    console.warn(`View ${view} does not implement refresh() method`);
+                }
+            } catch (error) {
+                console.warn(`Error refreshing view ${view}:`, error);
+            }
+        }, 10); // Small delay to ensure script execution is complete
     }
 
     updateActiveNavigation(view) {
