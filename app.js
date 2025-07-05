@@ -57,6 +57,9 @@ class ClinicApp {
             // Load view-specific script
             await this.loadViewScript(view);
             
+            // Initialize view (always, even if script was already loaded)
+            this.initializeView(view);
+            
             // Update page title
             this.updatePageTitle(view);
             
@@ -95,6 +98,42 @@ class ClinicApp {
         } catch (error) {
             console.warn(`Could not load script for ${view}:`, error);
         }
+    }
+
+    initializeView(view) {
+        // Call the appropriate view initialization based on the view
+        // Use setTimeout to ensure the view script has fully executed
+        setTimeout(() => {
+            try {
+                switch (view) {
+                    case 'specialties':
+                        if (window.specialtiesView) {
+                            window.specialtiesView.displaySpecialties();
+                        } else {
+                            console.warn('SpecialtiesView not yet available');
+                        }
+                        break;
+                    case 'clinicians':
+                        if (window.cliniciansView) {
+                            window.cliniciansView.displayClinicians();
+                        } else {
+                            console.warn('CliniciansView not yet available');
+                        }
+                        break;
+                    case 'places':
+                        if (window.placesView) {
+                            window.placesView.displayPlaces();
+                        } else {
+                            console.warn('PlacesView not yet available');
+                        }
+                        break;
+                    default:
+                        console.warn(`No initialization defined for view: ${view}`);
+                }
+            } catch (error) {
+                console.warn(`Error initializing view ${view}:`, error);
+            }
+        }, 10); // Small delay to ensure script execution is complete
     }
 
     updateActiveNavigation(view) {
