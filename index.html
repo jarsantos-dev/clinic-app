@@ -4,9 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestão de Clínica</title>
-    <meta http-equiv="refresh" content="0; url=dashboard.html">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <p>A redirecionar para o <a href="dashboard.html">Painel Principal</a>...</p>
+    <div class="container-fluid">
+        <div class="layout-wrapper">
+            <!-- Left Sidebar Navigation -->
+            <nav class="sidebar">
+                <header class="sidebar-header">
+                    <h3>Gestão de Clínica</h3>
+                </header>
+                <ul class="nav-menu">
+                    <li><a href="#dashboard" data-view="dashboard">Painel Principal</a></li>
+                    <li><a href="#patients" data-view="patients">Pacientes</a></li>
+                    <li><a href="#appointments" data-view="appointments">Consultas</a></li>
+                    <li><a href="#doctors" data-view="doctors">Médicos</a></li>
+                    <li><a href="#specialties" data-view="specialties">Especialidades</a></li>
+                    <li><a href="#reports" data-view="reports">Relatórios</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content Area -->
+            <main class="main-content" id="main-content">
+                <p>A carregar...</p>
+            </main>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
