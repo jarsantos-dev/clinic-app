@@ -155,7 +155,6 @@ class PlacesView {
                         <button onclick="window.placesView.deletePlace(${place.id})" class="secondary">Eliminar</button>
                     </div>
                 </div>
-                <p><small>Criado: ${new Date(place.createdAt).toLocaleDateString()}</small></p>
             </div>
         `).join('');
 
