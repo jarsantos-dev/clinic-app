@@ -5,7 +5,8 @@ class ClinicApp {
         this.viewConfig = {
             specialties: { title: 'Especialidades - Sistema de Gestão de Clínica' },
             clinicians: { title: 'Clínicos - Sistema de Gestão de Clínica' },
-            places: { title: 'Locais - Sistema de Gestão de Clínica' }
+            places: { title: 'Locais - Sistema de Gestão de Clínica' },
+            patients: { title: 'Pacientes - Sistema de Gestão de Clínica' }
         };
         this.init();
     }
