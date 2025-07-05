@@ -12,9 +12,8 @@ class ClinicApp {
     }
 
     init() {
-        // Handle hash changes and browser navigation
+        // Handle hash changes for navigation
         window.addEventListener('hashchange', () => this.handleUrlChange());
-        window.addEventListener('popstate', () => this.handleUrlChange());
         this.setupNavigation();
         this.handleUrlChange();
     }
