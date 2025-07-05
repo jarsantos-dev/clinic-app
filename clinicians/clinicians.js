@@ -205,7 +205,6 @@ class CliniciansView {
                     </div>
                 </div>
                 <p><strong>Especialidade:</strong> ${this.escapeHtml(this.getSpecialtyName(clinician.specialtyId))}</p>
-                <p><span>Registado: ${new Date(clinician.createdAt).toLocaleDateString('pt-PT')}</span></p>
             </div>
         `).join('');
 
