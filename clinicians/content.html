@@ -1,0 +1,31 @@
+<header class="content-header">
+    <h1>Clínicos</h1>
+</header>
+
+<section class="content-section">
+    <div class="list-header">
+        <h2>Gestão de Clínicos</h2>
+        <button onclick="showAddClinicianForm()">Adicionar Novo Clínico</button>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Pesquisar clínicos..." id="clinician-search" oninput="searchClinicians()">
+        <button onclick="searchClinicians()">Pesquisar</button>
+    </div>
+    <div id="add-clinician-form" class="hidden form-container">
+        <h3>Adicionar Novo Clínico</h3>
+        <form id="clinician-form">
+            <div>
+                <label for="clinician-name">Nome do Clínico *</label>
+                <input type="text" id="clinician-name" name="name" required>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="cancelAddClinician()" class="secondary">Cancelar</button>
+                <button type="submit">Adicionar Clínico</button>
+            </div>
+        </form>
+        <div id="form-message" class="hidden"></div>
+    </div>
+    <div id="clinicians-list">
+        <p>A carregar clínicos...</p>
+    </div>
+</section>
