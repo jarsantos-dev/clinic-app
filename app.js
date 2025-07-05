@@ -12,9 +12,8 @@ class ClinicApp {
     }
 
     init() {
-        // Handle hash changes and browser navigation
+        // Handle hash changes for navigation
         window.addEventListener('hashchange', () => this.handleUrlChange());
-        window.addEventListener('popstate', () => this.handleUrlChange());
         this.setupNavigation();
         this.handleUrlChange();
     }
@@ -104,18 +103,34 @@ class ClinicApp {
     refreshView(view) {
         // Use a standard interface - call refresh() method if available on the view
         // This allows each view to handle its own data loading logic
+        this.waitForViewAndRefresh(view, 0);
+    }
+
+    waitForViewAndRefresh(view, attempt) {
+        const maxAttempts = 5;
+        const baseDelay = 10;
+        const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff: 10, 20, 40, 80, 160ms
+        
         setTimeout(() => {
             try {
                 const viewInstance = window[view + 'View'];
                 if (viewInstance && typeof viewInstance.refresh === 'function') {
                     viewInstance.refresh();
+                } else if (attempt < maxAttempts) {
+                    // View not ready yet, retry with exponential backoff
+                    this.waitForViewAndRefresh(view, attempt + 1);
                 } else {
-                    console.warn(`View ${view} does not implement refresh() method`);
+                    console.warn(`View ${view} does not implement refresh() method after ${maxAttempts} attempts`);
                 }
             } catch (error) {
-                console.warn(`Error refreshing view ${view}:`, error);
+                if (attempt < maxAttempts) {
+                    // Error occurred, retry
+                    this.waitForViewAndRefresh(view, attempt + 1);
+                } else {
+                    console.warn(`Error refreshing view ${view} after ${maxAttempts} attempts:`, error);
+                }
             }
-        }, 10); // Small delay to ensure script execution is complete
+        }, delay);
     }
 
     updateActiveNavigation(view) {
