@@ -116,12 +116,8 @@ class CliniciansView {
         if (stored) {
             return JSON.parse(stored);
         }
-        // Return default specialties if none exist
-        return [
-            { id: 1, name: 'Cardiologia' },
-            { id: 2, name: 'Dermatologia' },
-            { id: 3, name: 'Pediatria' }
-        ];
+        // Return empty array if no specialties exist
+        return [];
     }
 
     populateSpecialtyDropdown() {
