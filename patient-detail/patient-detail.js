@@ -7,23 +7,31 @@ class PatientDetailView {
         this.clinicians = [];
         
         // Get patient ID from URL hash
-        const urlParts = window.location.hash.split('/');
+        const hash = window.location.hash.slice(1); // Remove #
+        const urlParts = hash.split('/');
         this.patientId = urlParts.length > 1 ? parseInt(urlParts[1]) : null;
         
         this.loadData();
     }
 
     static init() {
-        window.patientDetailView = new PatientDetailView();
+        window['patient-detailView'] = new PatientDetailView();
+        // Also register with an alternative name to debug
+        window.patientDetailView = window['patient-detailView'];
         console.log('Vista de detalhe do paciente inicializada');
         
-        // Display patient details and appointments when page loads
-        window.patientDetailView.displayPatientInfo();
-        window.patientDetailView.displayAppointments();
+        // Call refresh immediately to test
+        setTimeout(() => {
+            window['patient-detailView'].refresh();
+        }, 100);
     }
 
     // Standard interface method for view refresh
     refresh() {
+        console.log('Patient detail view refresh called');
+        // Reload the patient data first
+        this.loadData();
+        console.log('Patient loaded:', this.patient);
         this.displayPatientInfo();
         this.displayAppointments();
     }
@@ -349,6 +357,6 @@ class PatientDetailView {
 PatientDetailView.init();
 
 // Export functions to global scope for onclick handlers
-window.showCreateAppointmentForm = () => window.patientDetailView.showCreateAppointmentForm();
-window.cancelCreateAppointment = () => window.patientDetailView.cancelCreateAppointment();
-window.goBackToPatients = () => window.patientDetailView.goBackToPatients();
+window.showCreateAppointmentForm = () => window['patient-detailView'].showCreateAppointmentForm();
+window.cancelCreateAppointment = () => window['patient-detailView'].cancelCreateAppointment();
+window.goBackToPatients = () => window['patient-detailView'].goBackToPatients();
