@@ -18,6 +18,12 @@
                 <label for="clinician-name">Nome do Clínico *</label>
                 <input type="text" id="clinician-name" name="name" required>
             </div>
+            <div>
+                <label for="clinician-specialty">Especialidade *</label>
+                <select id="clinician-specialty" name="specialty" required>
+                    <option value="">Selecione uma especialidade...</option>
+                </select>
+            </div>
             <div class="form-actions">
                 <button type="button" onclick="cancelAddClinician()" class="secondary">Cancelar</button>
                 <button type="submit">Adicionar Clínico</button>
