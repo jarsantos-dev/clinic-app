@@ -158,7 +158,6 @@ class CliniciansView {
                         <button onclick="window.cliniciansView.deleteClinician(${clinician.id})" class="secondary">Eliminar</button>
                     </div>
                 </div>
-                <p><span>Registado: ${new Date(clinician.createdAt).toLocaleDateString('pt-PT')}</span></p>
             </div>
         `).join('');
 
